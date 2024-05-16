@@ -18,22 +18,24 @@ public class ClienteController {
     @Autowired
     private Clientes clientes;
 
-    @GetMapping("{id}")
-    public Cliente getClienteById(@PathVariable Integer id) {
-        return clientes.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
-    }
-
     @GetMapping
     public List<Cliente> find(Cliente cliente){
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+
         Example<Cliente> example = Example.of(cliente, matcher);
         //faz pesquisa com parâmetro ex: clientes?nome=mat -> retorna todos clientes que possuem "mat"
 
         return clientes.findAll(example);
     }
+
+    @GetMapping("{id}")
+    public Cliente getClienteById(@PathVariable Integer id) {
+        return clientes.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+    }
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -44,7 +46,7 @@ public class ClienteController {
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Integer id,
-                                 @RequestBody Cliente cliente) {
+                       @RequestBody Cliente cliente) {
         clientes
                 .findById(id)
                 .map(clienteExistente -> {
