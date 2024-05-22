@@ -1,11 +1,12 @@
 package io.github.anaooz.domain.entity;
 
+import io.github.anaooz.domain.enums.StatusPedido;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,7 +21,10 @@ public class Pedido {
     private BigDecimal total;
 
     @OneToMany(mappedBy = "pedido")
-    private Set<ItemPedido> itemPedido;
+    private List<ItemPedido> itens;
+
+    @Enumerated(EnumType.STRING)
+    private StatusPedido status;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)

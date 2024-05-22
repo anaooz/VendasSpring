@@ -8,14 +8,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import static  org.springframework.http.HttpStatus.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/produtos")
 public class ProdutoController {
 
-    @Autowired
     private Produtos produtos;
+
+    public ProdutoController(Produtos produtos) {
+        this.produtos = produtos;
+    }
 
     @GetMapping
     public List<Produto> find(Produto produto) {
@@ -35,13 +40,13 @@ public class ProdutoController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(CREATED)
     public Produto save(@RequestBody Produto produto) {
         return produtos.save(produto);
     }
 
     @PutMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(NO_CONTENT)
     public void update(@PathVariable Integer id,
                        @RequestBody Produto produto
     ) {
@@ -54,12 +59,12 @@ public class ProdutoController {
     }
 
     @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(NO_CONTENT)
     public void delete(@PathVariable Integer id) {
         produtos.findById(id)
                 .map(produto -> {
                     produtos.delete(produto);
-                    return produto;
+                    return Void.TYPE;
                 }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
     }
 }
