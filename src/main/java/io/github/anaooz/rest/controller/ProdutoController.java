@@ -2,6 +2,7 @@ package io.github.anaooz.rest.controller;
 
 import io.github.anaooz.domain.entity.Produto;
 import io.github.anaooz.domain.repository.Produtos;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
@@ -41,14 +42,14 @@ public class ProdutoController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Produto save(@RequestBody Produto produto) {
+    public Produto save(@RequestBody @Valid Produto produto) {
         return produtos.save(produto);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(NO_CONTENT)
     public void update(@PathVariable Integer id,
-                       @RequestBody Produto produto
+                       @RequestBody @Valid Produto produto
     ) {
         produtos.findById(id)
                 .map(produtoExistente -> {
