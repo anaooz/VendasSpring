@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 public class Pedido {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private LocalDate dataPedido;
     @Column(precision = 20, scale = 2)

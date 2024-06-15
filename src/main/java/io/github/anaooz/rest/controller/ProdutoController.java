@@ -2,10 +2,12 @@ package io.github.anaooz.rest.controller;
 
 import io.github.anaooz.domain.entity.Produto;
 import io.github.anaooz.domain.repository.Produtos;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -15,6 +17,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/produtos")
+@PreAuthorize("hasRole('ADMIN')")
+@Tag(name = "Produto", description = "API do Produto")
 public class ProdutoController {
 
     private Produtos produtos;

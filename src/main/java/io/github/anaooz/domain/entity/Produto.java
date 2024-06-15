@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Entity
 public class Produto {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "{campo.descricao.obrigatorio}")

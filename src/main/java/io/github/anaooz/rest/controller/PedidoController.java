@@ -8,8 +8,10 @@ import io.github.anaooz.rest.dto.InformacaoItemPedidoDTO;
 import io.github.anaooz.rest.dto.InformacoesPedidoDTO;
 import io.github.anaooz.rest.dto.PedidoDTO;
 import io.github.anaooz.service.PedidoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,6 +25,8 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api/pedidos")
+@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+@Tag(name = "Pedido", description = "API do Pedido")
 public class PedidoController {
 
     private PedidoService service;
